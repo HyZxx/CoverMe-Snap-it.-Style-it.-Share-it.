@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Éditeur - CoverMe</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="editor.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-camera-retro"></i>
+                <span>CoverMe</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Accueil</a></li>
+                <li><a href="features.html" class="nav-link">Fonctionnalités</a></li>
+                <li><a href="gallery.html" class="nav-link">Galerie</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Source Selection Modal -->
+    <div class="source-modal" id="sourceModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <h2><i class="fas fa-image"></i> Choisir une source</h2>
+            <p>Comment veux-tu ajouter ton image ?</p>
+            
+            <div class="source-options">
+                <button class="source-btn" id="cameraBtn">
+                    <i class="fas fa-camera"></i>
+                    <span>Prendre une photo</span>
+                    <small>Utiliser l'appareil photo</small>
+                </button>
+                
+                <button class="source-btn" id="galleryBtn">
+                    <i class="fas fa-images"></i>
+                    <span>Depuis ma galerie</span>
+                    <small>Choisir une photo existante</small>
+                </button>
+                
+                <button class="source-btn" id="uploadBtn">
+                    <i class="fas fa-upload"></i>
+                    <span>Importer un fichier</span>
+                    <small>Depuis mon appareil</small>
+                </button>
+            </div>
+            
+            <input type="file" id="fileInput" accept="image/*" hidden>
+            <video id="cameraPreview" autoplay style="display: none;"></video>
+            <canvas id="captureCanvas" style="display: none;"></canvas>
+        </div>
+    </div>
+
+    <!-- Main Editor -->
+    <div class="editor-container" id="editorContainer" style="display: none;">
+        <!-- Toolbar -->
+        <div class="editor-toolbar">
+            <div class="toolbar-left">
+                <button class="tool-btn" id="undoBtn" title="Annuler">
+                    <i class="fas fa-undo"></i>
+                </button>
+                <button class="tool-btn" id="redoBtn" title="Refaire">
+                    <i class="fas fa-redo"></i>
+                </button>
+                <div class="divider"></div>
+                <button class="tool-btn active" id="selectTool" title="Sélection">
+                    <i class="fas fa-mouse-pointer"></i>
+                </button>
+                <button class="tool-btn" id="cropTool" title="Recadrer">
+                    <i class="fas fa-crop"></i>
+                </button>
+                <button class="tool-btn" id="textTool" title="Texte">
+                    <i class="fas fa-font"></i>
+                </button>
+                <button class="tool-btn" id="stickerTool" title="Autocollants">
+                    <i class="fas fa-smile"></i>
+                </button>
+            </div>
+            
+            <div class="toolbar-center">
+                <span class="zoom-info">100%</span>
+                <button class="tool-btn" id="zoomOut" title="Zoom -">
+                    <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="tool-btn" id="zoomFit" title="Ajuster">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                </button>
+                <button class="tool-btn" id="zoomIn" title="Zoom +">
+                    <i class="fas fa-search-plus"></i>
+                </button>
+            </div>
+            
+            <div class="toolbar-right">
+                <button class="tool-btn" id="saveBtn" title="Sauvegarder">
+                    <i class="fas fa-save"></i>
+                </button>
+                <button class="tool-btn" id="downloadBtn" title="Télécharger">
+                    <i class="fas fa-download"></i>
+                </button>
+                <button class="tool-btn" id="shareBtn" title="Partager">
+                    <i class="fas fa-share"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Editor Workspace -->
+        <div class="editor-workspace">
+            <!-- Sidebar -->
+            <div class="editor-sidebar">
+                <!-- Image Adjustments -->
+                <div class="panel" id="imagePanel">
+                    <h3><i class="fas fa-adjust"></i> Image</h3>
+                    <div class="panel-content">
+                        <div class="slider-group">
+                            <label>Luminosité</label>
+                            <input type="range" id="brightness" min="0" max="200" value="100">
+                        </div>
+                        <div class="slider-group">
+                            <label>Contraste</label>
+                            <input type="range" id="contrast" min="0" max="200" value="100">
+                        </div>
+                        <div class="slider-group">
+                            <label>Saturation</label>
+                            <input type="range" id="saturation" min="0" max="200" value="100">
+                        </div>
+                        <div class="slider-group">
+                            <label>Teinte</label>
+                            <input type="range" id="hue" min="0" max="360" value="0">
+                        </div>
+                        <div class="slider-group">
+                            <label>Grain/Bruit</label>
+                            <input type="range" id="noise" min="0" max="100" value="0">
+                        </div>
+                        <div class="slider-group">
+                            <label>Flou</label>
+                            <input type="range" id="blur" min="0" max="10" value="0">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="panel" id="filtersPanel">
+                    <h3><i class="fas fa-magic"></i> Filtres</h3>
+                    <div class="panel-content">
+                        <div class="filter-grid">
+                            <button class="filter-preset active" data-filter="none">
+                                <div class="filter-preview"></div>
+                                <span>Original</span>
+                            </button>
+                            <button class="filter-preset" data-filter="vintage">
+                                <div class="filter-preview vintage"></div>
+                                <span>Vintage</span>
+                            </button>
+                            <button class="filter-preset" data-filter="bw">
+                                <div class="filter-preview bw"></div>
+                                <span>N&B</span>
+                            </button>
+                            <button class="filter-preset" data-filter="sepia">
+                                <div class="filter-preview sepia"></div>
+                                <span>Sépia</span>
+                            </button>
+                            <button class="filter-preset" data-filter="vibrant">
+                                <div class="filter-preview vibrant"></div>
+                                <span>Vibrant</span>
+                            </button>
+                            <button class="filter-preset" data-filter="cool">
+                                <div class="filter-preview cool"></div>
+                                <span>Froid</span>
+                            </button>
+                            <button class="filter-preset" data-filter="warm">
+                                <div class="filter-preview warm"></div>
+                                <span>Chaud</span>
+                            </button>
+                            <button class="filter-preset" data-filter="retro">
+                                <div class="filter-preview retro"></div>
+                                <span>Rétro</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Background & Decorations -->
+                <div class="panel" id="backgroundPanel">
+                    <h3><i class="fas fa-palette"></i> Décoration</h3>
+                    <div class="panel-content">
+                        <div class="tab-buttons">
+                            <button class="tab-btn active" data-tab="backgrounds">Arrière-plans</button>
+                            <button class="tab-btn" data-tab="stickers">Autocollants</button>
+                            <button class="tab-btn" data-tab="frames">Cadres</button>
+                        </div>
+                        
+                        <div class="tab-content active" id="backgrounds">
+                            <div class="bg-categories">
+                                <button class="category-btn active" data-category="colors">Couleurs</button>
+                                <button class="category-btn" data-category="gradients">Dégradés</button>
+                                <button class="category-btn" data-category="patterns">Motifs</button>
+                                <button class="category-btn" data-category="textures">Textures</button>
+                            </div>
+                            <div class="decoration-grid" id="decorationGrid">
+                                <!-- Les décorations seront chargées dynamiquement -->
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="stickers">
+                            <div class="sticker-categories">
+                                <button class="category-btn active" data-category="emoji">😊 Emoji</button>
+                                <button class="category-btn" data-category="shapes">📐 Formes</button>
+                                <button class="category-btn" data-category="nature">🌿 Nature</button>
+                                <button class="category-btn" data-category="vintage">📻 Vintage</button>
+                            </div>
+                            <div class="sticker-grid" id="stickerGrid">
+                                <!-- Les autocollants seront chargés dynamiquement -->
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="frames">
+                            <div class="frame-grid">
+                                <button class="frame-option" data-frame="none">
+                                    <div class="frame-preview no-frame"></div>
+                                    <span>Aucun</span>
+                                </button>
+                                <button class="frame-option" data-frame="classic">
+                                    <div class="frame-preview classic-frame"></div>
+                                    <span>Classique</span>
+                                </button>
+                                <button class="frame-option" data-frame="modern">
+                                    <div class="frame-preview modern-frame"></div>
+                                    <span>Moderne</span>
+                                </button>
+                                <button class="frame-option" data-frame="vintage">
+                                    <div class="frame-preview vintage-frame"></div>
+                                    <span>Vintage</span>
+                                </button>
+                                <button class="frame-option" data-frame="polaroid">
+                                    <div class="frame-preview polaroid-frame"></div>
+                                    <span>Polaroid</span>
+                                </button>
+                                <button class="frame-option" data-frame="torn">
+                                    <div class="frame-preview torn-frame"></div>
+                                    <span>Déchiré</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canvas Area -->
+            <div class="editor-canvas-area">
+                <div class="canvas-container">
+                    <canvas id="mainCanvas" width="800" height="600"></canvas>
+                    <div class="canvas-overlay">
+                        <!-- Overlay pour les interactions -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Camera Modal -->
+    <div class="camera-modal" id="cameraModal" style="display: none;">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="camera-header">
+                <h3>Prendre une photo</h3>
+                <button class="close-btn" id="closeCameraBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="camera-preview">
+                <video id="cameraVideo" autoplay playsinline></video>
+                <canvas id="photoCanvas" style="display: none;"></canvas>
+            </div>
+            <div class="camera-controls">
+                <button class="camera-btn" id="switchCameraBtn" title="Changer de caméra">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+                <button class="camera-btn capture-btn" id="captureBtn">
+                    <i class="fas fa-camera"></i>
+                </button>
+                <button class="camera-btn" id="cancelCameraBtn" title="Annuler">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="editor.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
