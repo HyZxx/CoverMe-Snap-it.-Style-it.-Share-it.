@@ -15,6 +15,10 @@ function initializeGallery() {
     const stored = localStorage.getItem('coverme-gallery');
     if (stored) {
         savedImages = JSON.parse(stored);
+        
+        // Nettoyer les images d'exemple si elles existent
+        savedImages = savedImages.filter(img => !img.id.startsWith('sample-'));
+        saveImagesToStorage();
     }
     
     updateStats();
@@ -64,42 +68,16 @@ function setupModal() {
 }
 
 function loadSavedImages() {
-    // Images d'exemple si la galerie est vide
+    // La galerie commence vide - pas d'images d'exemple
     if (savedImages.length === 0) {
-        const sampleImages = [
-            {
-                id: 'sample-1',
-                dataUrl: 'https://picsum.photos/400/600?random=1',
-                timestamp: Date.now() - 86400000, // 1 jour
-                filter: 'vintage',
-                frame: 'classic',
-                favorite: false,
-                downloads: 2,
-                shares: 1
-            },
-            {
-                id: 'sample-2',
-                dataUrl: 'https://picsum.photos/400/600?random=2',
-                timestamp: Date.now() - 172800000, // 2 jours
-                filter: 'noir',
-                frame: 'modern',
-                favorite: true,
-                downloads: 5,
-                shares: 3
-            },
-            {
-                id: 'sample-3',
-                dataUrl: 'https://picsum.photos/400/600?random=3',
-                timestamp: Date.now() - 259200000, // 3 jours
-                filter: 'vibrant',
-                frame: 'none',
-                favorite: false,
-                downloads: 1,
-                shares: 0
-            }
-        ];
-        savedImages = sampleImages;
-        saveImagesToStorage();
+        // Afficher l'état vide
+        const grid = document.getElementById('savedGalleryGrid');
+        const emptyState = document.getElementById('emptyState');
+        
+        if (grid && emptyState) {
+            grid.style.display = 'none';
+            emptyState.style.display = 'block';
+        }
     }
 }
 
