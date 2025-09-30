@@ -35,19 +35,23 @@ class CoverMeEditor {
     
     showSourceModal() {
         const modal = document.getElementById('sourceModal');
-        modal.style.display = 'flex';
         
-        // Animation d'apparition
-        setTimeout(() => {
-            modal.style.opacity = '1';
-            modal.querySelector('.modal-content').style.transform = 'scale(1)';
-        }, 10);
+        if (modal) {
+            // Supprimer le style display: none du HTML
+            modal.style.display = 'block';
+            
+            // Forcer le reflow
+            modal.offsetHeight;
+            
+            // Ajouter la classe show pour l'animation
+            modal.classList.add('show');
+        }
     }
     
     hideSourceModal() {
         const modal = document.getElementById('sourceModal');
-        modal.style.opacity = '0';
-        modal.querySelector('.modal-content').style.transform = 'scale(0.9)';
+        modal.classList.remove('show');
+        
         setTimeout(() => {
             modal.style.display = 'none';
         }, 300);
@@ -58,6 +62,27 @@ class CoverMeEditor {
         document.getElementById('cameraBtn').addEventListener('click', () => this.openCamera());
         document.getElementById('galleryBtn').addEventListener('click', () => this.openGallery());
         document.getElementById('uploadBtn').addEventListener('click', () => this.openFileUpload());
+        
+        // Fermer la modal en cliquant sur le fond
+        document.getElementById('sourceModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                this.hideSourceModal();
+            }
+        });
+        
+        // Boutons fermer modals
+        
+        // Fermer la modal en cliquant sur le fond
+        document.getElementById('sourceModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                this.hideSourceModal();
+            }
+        });
+        
+        // Fermer la modal en cliquant sur l'overlay
+        document.querySelector('#sourceModal .modal-overlay').addEventListener('click', () => {
+            this.hideSourceModal();
+        });
         
         // File input
         document.getElementById('fileInput').addEventListener('change', (e) => this.handleFileSelect(e));
@@ -118,19 +143,108 @@ class CoverMeEditor {
     
     async openCamera() {
         try {
+            // Vérifier si l'API est supportée
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                throw new Error('API caméra non supportée par ce navigateur');
+            }
+            
+            // Demander explicitement les permissions
+            const permissions = await navigator.permissions.query({ name: 'camera' });
+            
+            if (permissions.state === 'denied') {
+                throw new Error('Permission caméra refusée. Veuillez autoriser l\'accès dans les paramètres du navigateur.');
+            }
+            
+            // Afficher un message de demande de permission
+            this.showCameraPermissionMessage();
+            
+            // Tenter d'accéder à la caméra
             this.cameraStream = await navigator.mediaDevices.getUserMedia({ 
-                video: { facingMode: 'user' } 
+                video: { 
+                    facingMode: 'user',
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 }
+                } 
             });
             
             const video = document.getElementById('cameraVideo');
             video.srcObject = this.cameraStream;
             
+            // Attendre que la vidéo soit prête
+            await new Promise((resolve) => {
+                video.onloadedmetadata = resolve;
+            });
+            
+            this.hideCameraPermissionMessage();
             document.getElementById('cameraModal').style.display = 'flex';
             this.hideSourceModal();
+            
         } catch (error) {
             console.error('Erreur d\'accès à la caméra:', error);
-            alert('Impossible d\'accéder à la caméra. Veuillez vérifier les permissions.');
+            this.hideCameraPermissionMessage();
+            
+            let message = 'Impossible d\'accéder à la caméra.';
+            
+            if (error.message.includes('Permission')) {
+                message = 'Permission caméra refusée. Veuillez autoriser l\'accès dans les paramètres du navigateur et actualiser la page.';
+            } else if (error.message.includes('NotFoundError')) {
+                message = 'Aucune caméra trouvée sur cet appareil.';
+            } else if (error.message.includes('NotAllowedError')) {
+                message = 'Accès à la caméra refusé. Cliquez sur l\'icône caméra dans la barre d\'adresse pour autoriser.';
+            } else if (error.message.includes('NotReadableError')) {
+                message = 'Caméra déjà utilisée par une autre application.';
+            } else if (error.message.includes('non supportée')) {
+                message = error.message;
+            }
+            
+            this.showCameraError(message);
         }
+    }
+    
+    showCameraPermissionMessage() {
+        const message = document.createElement('div');
+        message.id = 'cameraPermissionMessage';
+        message.className = 'camera-permission-message';
+        message.innerHTML = `
+            <div class="permission-content">
+                <i class="fas fa-camera"></i>
+                <h3>Permission caméra requise</h3>
+                <p>Votre navigateur va vous demander l'autorisation d'accéder à la caméra.</p>
+                <p><strong>Veuillez cliquer sur "Autoriser"</strong></p>
+                <div class="loading-spinner"></div>
+            </div>
+        `;
+        document.body.appendChild(message);
+    }
+    
+    hideCameraPermissionMessage() {
+        const message = document.getElementById('cameraPermissionMessage');
+        if (message) {
+            message.remove();
+        }
+    }
+    
+    showCameraError(errorMessage) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'camera-error-message';
+        errorDiv.innerHTML = `
+            <div class="error-content">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>Erreur d'accès à la caméra</h3>
+                <p>${errorMessage}</p>
+                <button class="btn btn-primary" onclick="this.parentElement.parentElement.remove()">
+                    Compris
+                </button>
+            </div>
+        `;
+        document.body.appendChild(errorDiv);
+        
+        // Auto-suppression après 10 secondes
+        setTimeout(() => {
+            if (document.body.contains(errorDiv)) {
+                errorDiv.remove();
+            }
+        }, 10000);
     }
     
     closeCamera() {
@@ -155,6 +269,8 @@ class CoverMeEditor {
             const url = URL.createObjectURL(blob);
             this.loadImageFromUrl(url);
             this.closeCamera();
+            // Fermer automatiquement la modal après capture
+            this.hideSourceModal();
         });
     }
     
@@ -237,6 +353,8 @@ class CoverMeEditor {
         if (file && file.type.startsWith('image/')) {
             const url = URL.createObjectURL(file);
             this.loadImageFromUrl(url);
+            // Fermer la modal après sélection de fichier
+            this.hideSourceModal();
         }
     }
     
