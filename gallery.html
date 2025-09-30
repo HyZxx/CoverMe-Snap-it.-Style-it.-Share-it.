@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galerie - CoverMe</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Particules animées en arrière-plan -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-camera-retro"></i>
+                <span>CoverMe</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Accueil</a></li>
+                <li><a href="features.html" class="nav-link">Fonctionnalités</a></li>
+                <li><a href="gallery.html" class="nav-link active">Galerie</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">
+                <i class="fas fa-images"></i>
+                Ma Galerie
+            </h1>
+            <p class="page-subtitle">Retrouve toutes tes créations CoverMe</p>
+            <div class="gallery-stats">
+                <div class="stat">
+                    <span class="stat-number" id="totalPhotos">0</span>
+                    <span class="stat-label">Photos créées</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" id="totalDownloads">0</span>
+                    <span class="stat-label">Téléchargements</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" id="totalShares">0</span>
+                    <span class="stat-label">Partages</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Controls -->
+    <section class="gallery-controls">
+        <div class="container">
+            <div class="controls-bar">
+                <div class="filter-tabs">
+                    <button class="tab-btn active" data-filter="all">
+                        <i class="fas fa-th"></i>
+                        Toutes
+                    </button>
+                    <button class="tab-btn" data-filter="recent">
+                        <i class="fas fa-clock"></i>
+                        Récentes
+                    </button>
+                    <button class="tab-btn" data-filter="favorites">
+                        <i class="fas fa-heart"></i>
+                        Favoris
+                    </button>
+                </div>
+                <div class="view-options">
+                    <button class="view-btn active" data-view="grid">
+                        <i class="fas fa-th-large"></i>
+                    </button>
+                    <button class="view-btn" data-view="list">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+                <div class="action-buttons">
+                    <a href="features.html" class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        Nouvelle création
+                    </a>
+                    <button class="btn btn-secondary" id="clearGallery">
+                        <i class="fas fa-trash"></i>
+                        Vider la galerie
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery">
+        <div class="container">
+            <div class="gallery-grid" id="savedGalleryGrid">
+                <!-- Les images sauvegardées seront affichées ici -->
+            </div>
+            
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState">
+                <div class="empty-content">
+                    <i class="fas fa-camera"></i>
+                    <h3>Aucune création pour le moment</h3>
+                    <p>Commence à créer tes premières couvertures personnalisées !</p>
+                    <a href="features.html" class="btn btn-primary">
+                        <i class="fas fa-magic"></i>
+                        Créer maintenant
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal pour voir l'image en grand -->
+    <div class="modal" id="imageModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <img id="modalImage" src="" alt="Image en grand">
+            <div class="modal-actions">
+                <button class="btn btn-success" id="modalDownload">
+                    <i class="fas fa-download"></i>
+                    Télécharger
+                </button>
+                <button class="btn btn-primary" id="modalShare">
+                    <i class="fas fa-share"></i>
+                    Partager
+                </button>
+                <button class="btn btn-danger" id="modalDelete">
+                    <i class="fas fa-trash"></i>
+                    Supprimer
+                </button>
+                <button class="btn btn-warning" id="modalFavorite">
+                    <i class="fas fa-heart"></i>
+                    Favori
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-camera-retro"></i>
+                    <span>CoverMe</span>
+                </div>
+                <p>Snap it. Style it. Share it.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CoverMe. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="gallery.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

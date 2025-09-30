@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - CoverMe</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Particules animées en arrière-plan -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-camera-retro"></i>
+                <span>CoverMe</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Accueil</a></li>
+                <li><a href="features.html" class="nav-link">Fonctionnalités</a></li>
+                <li><a href="gallery.html" class="nav-link">Galerie</a></li>
+                <li><a href="contact.html" class="nav-link active">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">
+                <i class="fas fa-envelope"></i>
+                Contact
+            </h1>
+            <p class="page-subtitle">Une question ? Une suggestion ? On est là pour toi !</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Formulaire de contact -->
+                <div class="contact-form-container">
+                    <h2>Envoie-nous un message</h2>
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Ton prénom</label>
+                            <input type="text" id="name" name="name" required>
+                            <i class="fas fa-user"></i>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Ton email</label>
+                            <input type="email" id="email" name="email" required>
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Sujet</label>
+                            <select id="subject" name="subject" required>
+                                <option value="">Choisis un sujet...</option>
+                                <option value="question">Question générale</option>
+                                <option value="bug">Signaler un bug</option>
+                                <option value="feature">Suggestion de fonctionnalité</option>
+                                <option value="help">Besoin d'aide</option>
+                                <option value="partnership">Partenariat</option>
+                                <option value="other">Autre</option>
+                            </select>
+                            <i class="fas fa-tag"></i>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Ton message</label>
+                            <textarea id="message" name="message" rows="6" required placeholder="Raconte-nous tout..."></textarea>
+                            <i class="fas fa-comment"></i>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                            Envoyer le message
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Informations de contact -->
+                <div class="contact-info">
+                    <h2>Restons connectés</h2>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Email</h3>
+                            <p>hello@coverme.fr</p>
+                            <span>Réponse sous 24h</span>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fab fa-discord"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Discord</h3>
+                            <p>CoverMe Community</p>
+                            <span>Chat en direct</span>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fab fa-twitter"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Twitter</h3>
+                            <p>@CoverMeApp</p>
+                            <span>Actualités & support</span>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Instagram</h3>
+                            <p>@coverme.official</p>
+                            <span>Inspiration quotidienne</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Questions fréquentes</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-question" data-faq="1">
+                        <h3>CoverMe est-il gratuit ?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer" id="faq-1">
+                        <p>Oui ! CoverMe est totalement gratuit. Tu peux créer, éditer et télécharger tes couvertures sans limite.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" data-faq="2">
+                        <h3>Mes photos sont-elles sauvegardées ?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer" id="faq-2">
+                        <p>Tes créations sont sauvegardées localement sur ton appareil. Nous ne stockons aucune de tes photos sur nos serveurs pour protéger ta vie privée.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" data-faq="3">
+                        <h3>Puis-je utiliser CoverMe sur mobile ?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer" id="faq-3">
+                        <p>Absolument ! CoverMe est optimisé pour tous les appareils : smartphone, tablette et ordinateur.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" data-faq="4">
+                        <h3>Quels formats de photos sont supportés ?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer" id="faq-4">
+                        <p>CoverMe supporte tous les formats d'images courants : JPG, PNG, GIF, WEBP et même les HEIC d'iPhone.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" data-faq="5">
+                        <h3>Puis-je suggérer de nouveaux filtres ?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer" id="faq-5">
+                        <p>Bien sûr ! Utilise le formulaire ci-dessus ou contacte-nous sur nos réseaux sociaux. Nous adorons les idées créatives !</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" data-faq="6">
+                        <h3>CoverMe fonctionne-t-il hors ligne ?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer" id="faq-6">
+                        <p>Une fois la page chargée, tu peux utiliser CoverMe même sans connexion internet. Parfait pour créer partout !</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-camera-retro"></i>
+                    <span>CoverMe</span>
+                </div>
+                <p>Snap it. Style it. Share it.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CoverMe. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="contact.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

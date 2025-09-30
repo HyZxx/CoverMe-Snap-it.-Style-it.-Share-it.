@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fonctionnalités - CoverMe</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Particules animées en arrière-plan -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-camera-retro"></i>
+                <span>CoverMe</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Accueil</a></li>
+                <li><a href="features.html" class="nav-link active">Fonctionnalités</a></li>
+                <li><a href="gallery.html" class="nav-link">Galerie</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">
+                <i class="fas fa-magic"></i>
+                Fonctionnalités
+            </h1>
+            <p class="page-subtitle">Découvre tous les outils créatifs de CoverMe</p>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Pourquoi choisir CoverMe ?</h2>
+            <div class="features-grid">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3>Capture facile</h3>
+                    <p>Prends tes photos directement depuis ton navigateur ou importe tes images favorites.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Styles créatifs</h3>
+                    <p>Des filtres uniques, des cadres stylés et des effets pour rendre tes photos irrésistibles.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <h3>Partage instantané</h3>
+                    <p>Partage tes créations en un clic sur tous tes réseaux sociaux préférés.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>100% Mobile</h3>
+                    <p>Une expérience parfaite sur tous tes appareils, où que tu sois.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photo Upload Section -->
+    <section class="upload-section">
+        <div class="container">
+            <h2 class="section-title">Crée ta couverture maintenant !</h2>
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-content">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Glisse ton image ici</h3>
+                    <p>ou clique pour sélectionner</p>
+                    <input type="file" id="fileInput" accept="image/*" hidden>
+                    <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                        Choisir une photo
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Editor -->
+            <div class="editor" id="editor" style="display: none;">
+                <div class="editor-preview">
+                    <canvas id="canvas" width="400" height="600"></canvas>
+                </div>
+                <div class="editor-controls">
+                    <div class="control-group">
+                        <h4>Filtres</h4>
+                        <div class="filter-buttons">
+                            <button class="filter-btn active" data-filter="none">Original</button>
+                            <button class="filter-btn" data-filter="vintage">Vintage</button>
+                            <button class="filter-btn" data-filter="noir">Noir & Blanc</button>
+                            <button class="filter-btn" data-filter="sepia">Sépia</button>
+                            <button class="filter-btn" data-filter="vibrant">Vibrant</button>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <h4>Cadres</h4>
+                        <div class="frame-buttons">
+                            <button class="frame-btn active" data-frame="none">Aucun</button>
+                            <button class="frame-btn" data-frame="classic">Classique</button>
+                            <button class="frame-btn" data-frame="modern">Moderne</button>
+                            <button class="frame-btn" data-frame="vintage">Vintage</button>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <button class="btn btn-success" id="downloadBtn">
+                            <i class="fas fa-download"></i>
+                            Télécharger
+                        </button>
+                        <button class="btn btn-primary" id="shareBtn">
+                            <i class="fas fa-share"></i>
+                            Partager
+                        </button>
+                        <button class="btn btn-secondary" id="saveBtn">
+                            <i class="fas fa-save"></i>
+                            Sauvegarder
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-camera-retro"></i>
+                    <span>CoverMe</span>
+                </div>
+                <p>Snap it. Style it. Share it.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CoverMe. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
