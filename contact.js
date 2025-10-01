@@ -1,4 +1,3 @@
-// Script pour la page contact
 document.addEventListener('DOMContentLoaded', function() {
     setupContactForm();
     setupFAQ();
@@ -13,7 +12,6 @@ function setupContactForm() {
         handleFormSubmission();
     });
     
-    // Animation des champs au focus
     const inputs = form.querySelectorAll('input, select, textarea');
     inputs.forEach(input => {
         input.addEventListener('focus', function() {
@@ -26,7 +24,6 @@ function setupContactForm() {
             }
         });
         
-        // Garder l'état focused si il y a une valeur
         if (input.value) {
             input.parentElement.classList.add('focused');
         }
@@ -38,7 +35,6 @@ function handleFormSubmission() {
     const submitBtn = form.querySelector('button[type="submit"]');
     const formData = new FormData(form);
     
-    // Récupérer les données du formulaire
     const data = {
         name: formData.get('name'),
         email: formData.get('email'),
@@ -57,12 +53,10 @@ function handleFormSubmission() {
         return;
     }
     
-    // Animation de loading
     const originalText = submitBtn.innerHTML;
     submitBtn.innerHTML = '<div class="loading"></div> Envoi en cours...';
     submitBtn.disabled = true;
     
-    // Simuler l'envoi (dans une vraie app, ça serait un appel API)
     setTimeout(() => {
         // Succès
         submitBtn.innerHTML = '<i class="fas fa-check"></i> Message envoyé !';
